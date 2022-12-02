@@ -5,10 +5,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.io.FileOutputStream;
 
 public class Calorie {
   public static void main(String[] args) {
