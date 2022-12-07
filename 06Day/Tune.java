@@ -28,7 +28,7 @@ public class Tune {
     catch (FileNotFoundException ex) {
       ex.printStackTrace();
     }
-    System.out.println(ans + 14); // replace with ans + 4 
+    System.out.println(ans + 14); // replace with ans + 4
   }
 
   public static boolean repeats(String str) {
