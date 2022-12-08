@@ -33,16 +33,24 @@ public class Tree {
     }
 
     int ans = 0;
+    int score = 0;
     for (int i = 1; i < arr.length - 1; i++) {
       for (int j = 1; j < arr[i].length - 1; j++) {
         if (isVisible(arr, i, j)) {
           ans ++;
+          int c = calculateScore(arr, i, j);
+          if (c > score) {
+             // System.out.println(i + " " + j);
+            score = c;
+          }
+
         }
       }
     }
 
     ans = ans + arr.length + arr.length + arr[0].length + arr[0].length - 4;
     System.out.println(ans);
+    System.out.println(score);
   }
 
   public static boolean isVisible(int[][] arr, int x, int y) {
@@ -71,5 +79,37 @@ public class Tree {
       }
     }
     return (a || b || c || d);
+  }
+
+  public static int calculateScore(int[][] arr, int x, int y) {
+    int a = x;
+    int b = arr.length - x - 1;
+    int c = y;
+    int d = arr[x].length - y - 1;
+    for (int i = x - 1; i >= 0; i--) {
+      if (arr[x][y] <= arr[i][y]) {
+        a = x - i;
+        break;
+      }
+    }
+    for (int i = x+1; i < arr.length; i++) {
+      if (arr[x][y] <= arr[i][y]) {
+        b = i - x;
+        break;
+      }
+    }
+    for (int i = y-1; i >= 0; i--) {
+      if (arr[x][y] <= arr[x][i]) {
+        c = y - i;
+        break;
+      }
+    }
+    for (int i = y+1; i < arr[x].length; i++) {
+      if (arr[x][y] <= arr[x][i]) {
+        d = i - y;
+        break;
+      }
+    }
+    return (a*b*c*d);
   }
 }
