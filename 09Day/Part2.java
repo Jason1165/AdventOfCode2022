@@ -58,7 +58,7 @@ public class Part2 {
           if (!snake.get(k).touching(snake.get(k-1))) {
             // System.out.println("Head: " + snake.get(k-1).toString() + " " + k);
             // System.out.println("Tail: " + snake.get(k).toString() + " " + k);
-            snake.get(k).move(snake.get(k-1), dir);
+            snake.get(k).move(snake.get(k-1));
           }
         }
         // System.out.println(snake.toString());

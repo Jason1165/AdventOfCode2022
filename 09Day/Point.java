@@ -45,7 +45,7 @@ public class Point {
     return (disX <= 1 && disY <= 1);
   }
 
-  public void move(Point p, String d) {
+  public void move(Point p) {
       int headX = p.getX();
       int headY = p.getY();
       if (headX == x && headY < y) {
