@@ -34,19 +34,39 @@ public class CRT {
     int cycle = 0;
     int total = 1;
     int sum20 = 0;
+    char[][] arr = new char[6][40];
     while (cycle < input.size()) {
       String n = input.get(cycle);
       cycle++;
-      //System.out.println("Cycle: " + cycle + "\t" + n + "\t" + total);
+      // System.out.println("Cycle: " + cycle + "\t" + n + "\t" + total);
       if ((cycle+20) % 40 == 0) {
-        // System.out.println("Cycle: " + cycle + " ");
-        // System.out.println("X Value: " + total);
         sum20 = sum20 + cycle*total;
       }
+
+
+      int row = (cycle-1) / 40;
+      int col = (cycle-1) % 40;
+      int dist = Math.abs(col - total);
+      // System.out.println("Cycle: " + cycle + "\t" + "Distance: " + dist);
+      if (dist <= 1) {
+        arr[row][col] = '#';
+      }
+      else {
+        arr[row][col] = '.';
+      }
+
       if (!n.equals("noop") && !n.equals("addx")) {
         int x = Integer.parseInt(n);
         total += x;
       }
+
+    }
+
+    for (int i = 0; i < arr.length; i++) {
+      for (int j = 0; j < arr[i].length; j++) {
+        System.out.print(arr[i][j]);
+      }
+      System.out.println();
     }
 
     System.out.println(sum20);
