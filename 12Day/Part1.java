@@ -45,8 +45,8 @@ public class Part1 {
     // System.out.println(end[0] + " " + end[1]);
     // System.out.println(solve(start[0], start[1], arr));
 
-    // System.out.println(BFS(start[0], start[1], end[0], end[1], arr));
-    System.out.println((BFS(end[0], end[1], -1, -1, arr)));
+    System.out.println(BFS(start[0], start[1], end[0], end[1], arr));
+    // System.out.println((BFS(end[0], end[1], -1, -1, arr)));
 
   }
 
@@ -55,29 +55,30 @@ public class Part1 {
     frontier.add(new int[] {row, col});
     int[][] dir = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}, {1, 0}, {-1, 0}, {0, 1}, {0, -1}};
     int[][] visited = new int[arr.length][arr[0].length];
-    // visited[rowT][colT] = -1;
+    visited[rowT][colT] = -1; //
     int ticks = 0;
     while (frontier.size()!=0) {
       if (animate) {
         gotoTop();
         out(visited, arr);
-        wait(100);
+        wait(100m e);
       }
       int len = frontier.size();
       for (int k = 0; k < len; k++) {
         int[] current = frontier.remove(0);
         visited[current[0]][current[1]] += 1;
-        // if (current[0] == rowT && current[1] == colT) {
-        //   return ticks;
-        // }
-        if (arr[current[0]][current[1]] == 'a') {
+        if (current[0] == rowT && current[1] == colT) {
           return ticks;
         }
+        // if (arr[current[0]][current[1]] == 'a') {
+        //   return ticks;
+        // }
         for (int i = 0; i < dir.length; i++) {
           if (dir[i][0] + current[0] == -1 || dir[i][0] + current[0] == arr.length || dir[i][1] + current[1] == -1 || dir[i][1] + current[1] == arr[row].length) {
           }
           else {
-            if (valid2(arr, current[0], current[1], current[0] + dir[i][0], current[1] + dir[i][1]) && visited[current[0]+dir[i][0]][current[1]+dir[i][1]] <= 10) {
+            // 2
+            if (valid(arr, current[0], current[1], current[0] + dir[i][0], current[1] + dir[i][1]) && visited[current[0]+dir[i][0]][current[1]+dir[i][1]] <= 10) {
               visited[current[0]+dir[i][0]][current[1]+dir[i][1]]++;
               frontier.add(new int[] {current[0]+dir[i][0], current[1]+dir[i][1]});
             }
