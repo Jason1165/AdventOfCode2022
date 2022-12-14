@@ -10,7 +10,7 @@ public class Cave {
   public static char ROCK = '#';
   public static char SAND = 'o';
   public static char ORIGIN = '+';
-  public static int minimize = 400;
+  public static int minimize = -500;
 
   char[][] map;
   int numOfSand;
@@ -36,7 +36,7 @@ public class Cave {
     }
     fillAir();
     addRocks(directions);
-    map[0][500-minimize] = ORIGIN;
+    map[0][500-minimize] = SAND;
   }
 
   public void fillAir() {
@@ -48,6 +48,7 @@ public class Cave {
   }
 
   public void addRocks(ArrayList<String> dirs) {
+    int high = 0;
     for (int i = 0; i < dirs.size(); i++) {
       String str = dirs.get(i);
       int[][] steps = toArr(str);
@@ -56,6 +57,9 @@ public class Cave {
         int yStart = steps[s][1];
         int xEnd = steps[s+1][0];
         int yEnd = steps[s+1][1];
+        if (xStart > high) {
+          high = xStart;
+        }
         map[xStart][yStart] = ROCK;
         map[xEnd][yEnd] = ROCK;
         if (xStart == xEnd) {
@@ -84,6 +88,13 @@ public class Cave {
         }
       }
      }
+     addLastRow(high+2);
+  }
+
+  public void addLastRow(int row) {
+    for (int i = 0; i < map[row].length; i++) {
+      map[row][i] = ROCK;
+    }
   }
 
   public int[][] toArr(String str) {
@@ -92,7 +103,7 @@ public class Cave {
     int[][] ans = new int[arr.length/2][2];
     for (int i = 0; i < arr.length; i++) {
       int x = Integer.parseInt(arr[i]);
-      if (x > minimize) {
+      if (i%2 == 0 && x > minimize) {
         x = x - minimize;
       }
       ans[i/2][(i+1)%2] = x;
@@ -149,14 +160,11 @@ public class Cave {
       }
     }
     numOfSand = n;
-    return numOfSand; 
+    return numOfSand;
   }
 
   public int move(int x, int y) {
-    if (inAbyss(x, y)) {
-      return -1;
-    }
-    else if (map[x+1][y] != ROCK && map[x+1][y] != SAND) {
+    if (map[x+1][y] != ROCK && map[x+1][y] != SAND) {
       return move(x+1, y);
     }
     else if (map[x+1][y-1] != ROCK && map[x+1][y-1] != SAND) {
@@ -166,12 +174,16 @@ public class Cave {
       return move(x+1, y+1);
     }
     else {
+      if (inAbyss(x, y)) {
+        return -1;
+      }
       map[x][y] = SAND;
       return 0;
     }
   }
 
   public boolean inAbyss(int x, int y) {
-    return (y == 0 || x == map.length-1 || y == map[0].length);
+    // return (y == 0 || x == map.length-1 || y == map[0].length);
+    return (x == 0 && y == 500 - minimize);
   }
 }
