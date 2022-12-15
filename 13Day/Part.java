@@ -64,6 +64,14 @@ public class Part {
       int[] r = splice(right);
       System.out.println("New Left: " + Arrays.toString(l));
       System.out.println("New Right: " + Arrays.toString(r));
+      if (l.length == 0 && r.length > 0) {
+        System.out.println("\t\tresult: true because left is empty and shorter");
+        return true;
+      }
+      if (r.length == 0 && l.length > 0) {
+        System.out.println("\t\tresult: false because left is longer");
+        return false;
+      }
       if (r.length < l.length) {
         System.out.println("\t\tresult: false because right is shorter");
         return false;
@@ -79,16 +87,15 @@ public class Part {
           return true;
         }
       }
+      //
     }
-
-    /*
-    */
-
     return false;
   }
 
   public static int[] splice(String str) {
+    System.out.println("Start: " + str);
     if (isArray(str)) {
+      // System.out.println("isArray: " + str);
       str = str.substring(1, str.length()-1);
       String[] s = str.split(",");
       int[] temp = new int[s.length];
@@ -97,36 +104,44 @@ public class Part {
       }
       return temp;
     }
-    // else {
-    //   // needs fixing
-    //   System.out.println("Where is this happening?");
-    //   str = str.substring(1, str.length()-1);
-    //   int a = str.indexOf("]");
-    //   str = str.substring(0, a);
-    //   int b = str.lastIndexOf("[");
-    //   str = str.substring(b+1,a);
-    //   if (str.indexOf("[") == -1) {
-    //     String[] s = str.split(",");
-    //     int[] temp = new int[s.length];
-    //     for (int i = 0; i < s.length; i++) {
-    //       temp[i] = Integer.parseInt(s[i]);
-    //     }
-    //     return temp;
-    //   }
-    //   else {
-    //     int f = str.indexOf("[");
-    //     str = str.substring(0, f);
-    //     String[] s = str.split(",");
-    //     int[] temp = new int[s.length];
-    //     for (int i = 0; i < s.length; i++) {
-    //       temp[i] = Integer.parseInt(s[i]);
-    //     }
-    //     return temp;
-    //   }
-    // }
+    else {
+      // needs fixing
+      System.out.println("This: " + str);
+      int a = str.indexOf("]");
+      int b = str.indexOf("[");
+      str = str.substring(b+1,a);
+      // whats remains is an array of array or ints
+      if (b == 0) {
+        // if only ints left
+        System.out.println(str);
+        if (str.substring(b, a).indexOf("[") == -1) {
+          String[] s = str.split(",");
+          int[] temp = new int[s.length];
+          for (int i = 0; i < s.length; i++) {
+            temp[i] = Integer.parseInt(s[i]);
+          }
+          return temp;
+        }
+        else {
+          System.out.println("Recursion sucks");
+          System.out.println(str.substring(0, str.lastIndexOf("]")+1));
+          return splice(str.substring(0, str.lastIndexOf("]")+1));
+        }
+      }
+      else {
+        int f = str.indexOf("[");
+        str = str.substring(0, f);
+        String[] s = str.split(",");
+        int[] temp = new int[s.length];
+        for (int i = 0; i < s.length; i++) {
+          temp[i] = Integer.parseInt(s[i]);
+        }
+        return temp;
+      }
+    }
   }
 
-  public static String split(String str) {
+  public static String p(String str) {
     return "";
   }
 
